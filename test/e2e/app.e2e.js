@@ -1,6 +1,8 @@
 import {expect} from 'chai';
-import {beforeAndAfter, app, rpcServer} from './../environment';
+import env from './../environment';
 import './e2e-common';
+
+const {server, rpcServer, beforeAndAfter} = env();
 
 describe('React application', () => {
   beforeAndAfter();
@@ -18,7 +20,7 @@ describe('React application', () => {
         .respond(([reqSiteId]) => reqSiteId === siteId ? [myComment] : null);
 
       const page = await browser.newPage();
-      await page.goto(app.getUrl(`/?siteId=${siteId}`));
+      await page.goto(server.getUrl(`/?siteId=${siteId}`));
 
       await page.waitForSelector('li', {timeout: 1000});
 

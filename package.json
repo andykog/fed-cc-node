@@ -8,7 +8,7 @@
     "email": "yanivef@wix.com"
   },
   "scripts": {
-    "start": "yoshi start",
+    "start": "yoshi start --entry-point=./index-dev.js",
     "precommit": "yoshi lint",
     "pretest": "yoshi build",
     "test": "yoshi test",

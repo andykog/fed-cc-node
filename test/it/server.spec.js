@@ -1,10 +1,11 @@
 import {expect} from 'chai';
 import axios from 'axios';
 import adapter from 'axios/lib/adapters/http';
-import {beforeAndAfter, app, rpcServer} from '../environment';
+import env from './../environment';
 import {baseURL} from '../test-common';
 import {wixAxiosInstanceConfig} from 'wix-axios-config';
 
+const {server, rpcServer, beforeAndAfter} = env();
 const axiosInstance = wixAxiosInstanceConfig(axios, {baseURL, adapter});
 
 describe('When rendering', () => {
@@ -18,7 +19,7 @@ describe('When rendering', () => {
       .when('CommentsService', 'fetch')
       .respond(([reqSiteId]) => reqSiteId === siteId ? [myComment] : null);
 
-    const url = app.getUrl(`/api/comments/${siteId}`);
+    const url = server.getUrl(`/api/comments/${siteId}`);
     const response = await axiosInstance.get(url);
 
     expect(response.data).to.eql([myComment]);
